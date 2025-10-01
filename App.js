@@ -1,20 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 
-export default function App() {
+import MoviesPage from "./src/pages/MoviesPage";
+import TvPage from "./src/pages/TvPage";
+import SearchPage from "./src/pages/SearchPage";
+import ShowPage from "./src/pages/ShowPage";
+
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+function Tabs() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Tab.Navigator>
+      <Tab.Screen name="Movies" component={MoviesPage} />
+      <Tab.Screen name="Search Results" component={SearchPage} />
+      <Tab.Screen name="TV Shows" component={TvPage} />
+    </Tab.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Back To List"
+          component={Tabs}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="ShowPage" component={ShowPage} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
